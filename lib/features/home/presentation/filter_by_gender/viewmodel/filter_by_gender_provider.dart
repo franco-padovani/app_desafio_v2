@@ -1,3 +1,4 @@
+import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/sealed_genders.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +10,7 @@ final String baseUrl = dotenv.env['API_CHARACTERS_BASE_URL'] ?? '';
 class FilterByGenderNotifier extends StateNotifier<List<Character>> {
   late final RickAndMortyApiRepositoryImpl repository;
   final Ref ref;
-  final String gender;
+  final CharacterGender gender;
   final String baseUrl = dotenv.env['API_CHARACTERS_BASE_URL'] ?? '';
 
   String? lastPageLoaded;
@@ -41,18 +42,20 @@ class FilterByGenderNotifier extends StateNotifier<List<Character>> {
         await repository.getCharacters(nextPage);
 
     final filteredCharacters = rawCharacters
-        .where((character) =>
-            character.gender.toLowerCase() == gender.toLowerCase())
+        .where((character) => _filterByGender(character.gender))
         .toList();
 
-    /*
-    Hago shuffle porque sino se repiten mucho los 'Main Characters' y los personajes,
-    queda mejot de esta forma
-     */
     filteredCharacters.shuffle();
-
     state = [...state, ...filteredCharacters];
     ref.read(isLoadingProvider.notifier).state = false;
+  }
+
+  bool _filterByGender(String characterGender) {
+    return switch (gender) {
+      Female() => characterGender.toLowerCase() == 'female',
+      Male() => characterGender.toLowerCase() == 'male',
+      Unknown() => characterGender.toLowerCase() == 'unknown',
+    };
   }
 
   Future<void> refreshCharacters() async {

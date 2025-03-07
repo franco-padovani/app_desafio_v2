@@ -1,6 +1,4 @@
-import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/female_characters_provider.dart';
-import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/male_characters_provider.dart';
-import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/unknown_characters_provider.dart';
+import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/viewmodel.dart';
 import 'package:app_desafio_v2/features/shared/data/providers/r_and_m_repository_provider.dart';
 import 'package:app_desafio_v2/features/shared/data/repositories/rick_and_morty_api_repository_impl.dart';
 import 'package:app_desafio_v2/features/shared/model/entities/info/info.dart';
