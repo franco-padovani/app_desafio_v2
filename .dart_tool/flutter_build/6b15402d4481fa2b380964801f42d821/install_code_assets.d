@@ -1,0 +1,1 @@
+ /Users/franco.padovani/Desktop/app_desafio_v2/.dart_tool/flutter_build/6b15402d4481fa2b380964801f42d821/native_assets.json: 
