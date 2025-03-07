@@ -1,0 +1,30 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'r_and_m_repository_provider.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$rickAndMortyRepositoryHash() =>
+    r'f3da924fdfdcb0dfaac39ba84dfe1c3de7e63871';
+
+/// See also [rickAndMortyRepository].
+@ProviderFor(rickAndMortyRepository)
+final rickAndMortyRepositoryProvider =
+    AutoDisposeProvider<RickAndMortyApiRepositoryImpl>.internal(
+  rickAndMortyRepository,
+  name: r'rickAndMortyRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$rickAndMortyRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef RickAndMortyRepositoryRef
+    = AutoDisposeProviderRef<RickAndMortyApiRepositoryImpl>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
