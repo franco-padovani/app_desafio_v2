@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel/viewmodel.dart';
-import 'package:app_desafio_v2/features/filter_search/presentation/widgets/widgets.dart';
+import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel.dart';
+import 'package:app_desafio_v2/features/filter_search/presentation/widgets.dart';
 import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
 import 'package:app_desafio_v2/features/shared/widgets/widgets.dart';
 
