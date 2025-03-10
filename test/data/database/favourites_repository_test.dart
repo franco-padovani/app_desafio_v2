@@ -1,5 +1,4 @@
 import 'package:app_desafio_v2/features/shared/data/database/favourites_database_impl.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
