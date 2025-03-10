@@ -13,23 +13,25 @@ class FilterCharactersNotifier extends _$FilterCharactersNotifier {
   }
 
   void filterCharacters() {
-    List<Character> allCharacters = ref.watch(getAllCharactersProvider);
-    String genderFilterState = ref.watch(genderFilterProvider);
-    String statusFilterState = ref.watch(statusFilterProvider);
+    GetAllCharactersState allCharacters = ref.watch(getAllCharactersProvider);
+    if (allCharacters is FetchCompletedState) {
+      String genderFilterState = ref.watch(genderFilterProvider);
+      String statusFilterState = ref.watch(statusFilterProvider);
 
-    state = allCharacters
-        .where((character) =>
-            _filterWith(
-              type: character.gender,
-              typeFilterValue: genderFilterState,
-            ) &&
-            _filterWith(
-              type: character.status,
-              typeFilterValue: statusFilterState,
-            ))
-        .toList();
+      state = allCharacters.characters
+          .where((character) =>
+              _filterWith(
+                type: character.gender,
+                typeFilterValue: genderFilterState,
+              ) &&
+              _filterWith(
+                type: character.status,
+                typeFilterValue: statusFilterState,
+              ))
+          .toList();
 
-    state.sort((a, b) => a.name.compareTo(b.name));
+      state.sort((a, b) => a.name.compareTo(b.name));
+    }
   }
 
   bool _filterWith({required String type, required String typeFilterValue}) =>

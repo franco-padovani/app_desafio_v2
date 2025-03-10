@@ -8,20 +8,35 @@ import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
 
 part 'get_all_characters.g.dart';
 
-@riverpod
+sealed class GetAllCharactersState {
+  GetAllCharactersState();
+}
+
+class InitialState extends GetAllCharactersState {}
+
+class FetchingState extends GetAllCharactersState {}
+
+class FetchCompletedState extends GetAllCharactersState {
+  List<Character> characters;
+
+  FetchCompletedState(this.characters);
+}
+
+@Riverpod(keepAlive: true)
 class GetAllCharacters extends _$GetAllCharacters {
   @override
-  List<Character> build() {
-    return [];
+  GetAllCharactersState build() {
+    return InitialState();
   }
 
   Future<void> searchCharacters() async {
+    if (state is FetchCompletedState || state is FetchingState) return;
     final List<Character> allCharactersFound = [];
 
     final String baseUrl = dotenv.env['API_CHARACTERS_BASE_URL'] ?? '';
     String nextPage = '${baseUrl}1';
-
     while (nextPage != '') {
+      state = FetchingState();
       final List<Character> charactersFound =
           await _getCharactersPerPage(ref, nextPage);
       nextPage = await _getPage(ref, nextPage);
@@ -29,7 +44,7 @@ class GetAllCharacters extends _$GetAllCharacters {
       ref.read(pagesChargedProvider.notifier).increment();
     }
 
-    state = allCharactersFound;
+    state = FetchCompletedState(allCharactersFound);
   }
 
   Future<List<Character>> _getCharactersPerPage(

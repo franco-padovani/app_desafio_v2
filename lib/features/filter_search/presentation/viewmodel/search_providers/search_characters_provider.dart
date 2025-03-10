@@ -17,22 +17,24 @@ class SearchCharacters extends _$SearchCharacters {
   }
 
   void searchCharacters(String newQuery) {
-    List<Character> allCharacters = ref.read(getAllCharactersProvider);
+    GetAllCharactersState allCharacters = ref.read(getAllCharactersProvider);
 
-    final List<Character> filteredCharacters = allCharacters
-        .where((c) => c.name.toLowerCase().contains(newQuery.toLowerCase()))
-        .toList();
+    if (allCharacters is FetchCompletedState) {
+      final List<Character> filteredCharacters = allCharacters.characters
+          .where((c) => c.name.toLowerCase().contains(newQuery.toLowerCase()))
+          .toList();
 
-    _debounce?.cancel();
-    _debounce = Timer(Duration(milliseconds: 500), () {
-      filteredCharacters.sort((p, n) {
-        int pDistance =
-            similarityScore(p.name.toLowerCase(), newQuery.toLowerCase());
-        int nDistance =
-            similarityScore(n.name.toLowerCase(), newQuery.toLowerCase());
-        return nDistance.compareTo(pDistance);
+      _debounce?.cancel();
+      _debounce = Timer(Duration(milliseconds: 500), () {
+        filteredCharacters.sort((p, n) {
+          int pDistance =
+              similarityScore(p.name.toLowerCase(), newQuery.toLowerCase());
+          int nDistance =
+              similarityScore(n.name.toLowerCase(), newQuery.toLowerCase());
+          return nDistance.compareTo(pDistance);
+        });
+        state = filteredCharacters;
       });
-      state = filteredCharacters;
-    });
+    }
   }
 }

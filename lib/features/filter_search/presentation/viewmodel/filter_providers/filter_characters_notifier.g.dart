@@ -7,7 +7,7 @@ part of 'filter_characters_notifier.dart';
 // **************************************************************************
 
 String _$filterCharactersNotifierHash() =>
-    r'8e75f19c8a0658b550085784d21be33b73d1b0a6';
+    r'13fb0ae4074c035a29f81f2a740e5ae9443c1e7b';
 
 /// See also [FilterCharactersNotifier].
 @ProviderFor(FilterCharactersNotifier)

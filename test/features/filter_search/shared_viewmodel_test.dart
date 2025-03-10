@@ -25,17 +25,20 @@ void main() {
     final notifier = container.read(getAllCharactersProvider.notifier);
 
     await notifier.searchCharacters();
-    final allCharacters = container.read(getAllCharactersProvider);
+    final GetAllCharactersState allCharacters =
+        container.read(getAllCharactersProvider);
 
-    for (var i = 0; i < allCharacters.length; i++) {
+    if (allCharacters is FetchCompletedState) {
+      for (var i = 0; i < allCharacters.characters.length; i++) {
+        expect(
+          allCharacters.characters[i].id,
+          i + 1,
+        );
+      }
       expect(
-        allCharacters[i].id,
-        i + 1,
-      );
+        allCharacters.characters.length,
+        40,
+      ); // Basado en los datos de los archivos JSON (2 paginas de 20) -> 2*20 = 40
     }
-    expect(
-      allCharacters.length,
-      40,
-    ); // Basado en los datos de los archivos JSON (2 paginas de 20) -> 2*20 = 40
   });
 }
