@@ -1,0 +1,34 @@
+# Flutter
+**/build/
+**/android/.gradle/
+**/android/app/debug/
+**/android/app/release/
+**/android/key.properties
+**/ios/Pods/
+**/ios/.generated/
+**/.dart_tool/
+**/.packages
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.idea/
+# Dart
+**/*.lock
+**/.pub-cache/
+**/.pub/
+# VS Code
+**/.vscode/
+# IntelliJ
+**/.idea/
+**/*.iml
+**/*.ipr
+**/*.iws
+# macOS
+.DS_Store
+# Linux
+**/.fvm/
+**/linux/flutter/
+# Windows
+Thumbs.db
+Desktop.ini
+# Generated files
+**/pubspec.lock
