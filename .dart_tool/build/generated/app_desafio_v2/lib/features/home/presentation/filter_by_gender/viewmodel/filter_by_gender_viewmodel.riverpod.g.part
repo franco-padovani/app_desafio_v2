@@ -1,0 +1,23 @@
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$filterByGenderViewmodelHash() =>
+    r'7e5f2cfe83475f519d829dcae228c830e76f2855';
+
+/// See also [FilterByGenderViewmodel].
+@ProviderFor(FilterByGenderViewmodel)
+final filterByGenderViewmodelProvider =
+    AutoDisposeNotifierProvider<FilterByGenderViewmodel, void>.internal(
+  FilterByGenderViewmodel.new,
+  name: r'filterByGenderViewmodelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filterByGenderViewmodelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FilterByGenderViewmodel = AutoDisposeNotifier<void>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

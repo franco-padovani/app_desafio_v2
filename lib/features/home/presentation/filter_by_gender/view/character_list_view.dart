@@ -1,3 +1,4 @@
+import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/filter_by_gender_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,28 +22,16 @@ class CharacterListState extends ConsumerState<CharacterList> {
   @override
   void initState() {
     final providerNotifier = ref.read(widget.provider.notifier);
+    final viewmodel = ref.read(filterByGenderViewmodelProvider.notifier);
 
     providerNotifier.getCharacters();
 
-    _infiniteScroll(
+    viewmodel.infiniteScroll(
       scrollController: _scrollController,
       providerNotifier: providerNotifier,
-      ref: ref,
     );
 
     super.initState();
-  }
-
-  void _infiniteScroll(
-      {required ScrollController scrollController,
-      required providerNotifier,
-      required WidgetRef ref}) {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels + 500 >=
-          scrollController.position.maxScrollExtent) {
-        providerNotifier.getCharacters();
-      }
-    });
   }
 
   @override
@@ -55,14 +44,14 @@ class CharacterListState extends ConsumerState<CharacterList> {
   Widget build(BuildContext context) {
     final isLoading = ref.watch(isLoadingProvider);
     final filteredCharacters = ref.watch(widget.provider);
+    final viewmodel = ref.read(filterByGenderViewmodelProvider.notifier);
 
     final providerNotifier = ref.read(widget.provider.notifier);
 
-    _chechForMoreCharacters(
-      characters: filteredCharacters,
+    viewmodel.chechForMoreCharacters(
+      provider: widget.provider,
       minQuantityOfCharacters: 4,
       providerNotifier: providerNotifier,
-      ref: ref,
     );
 
     return (isLoading)
@@ -72,19 +61,6 @@ class CharacterListState extends ConsumerState<CharacterList> {
             scrollController: _scrollController,
             filteredCharacters: filteredCharacters,
           );
-  }
-
-  void _chechForMoreCharacters({
-    required List<Character> characters,
-    required int minQuantityOfCharacters,
-    required providerNotifier,
-    required WidgetRef ref,
-  }) {
-    Future(() {
-      if (characters.length < minQuantityOfCharacters) {
-        providerNotifier.getCharacters();
-      }
-    });
   }
 }
 
