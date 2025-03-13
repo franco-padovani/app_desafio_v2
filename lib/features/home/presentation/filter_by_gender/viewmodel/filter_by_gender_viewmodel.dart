@@ -8,32 +8,20 @@ class FilterByGenderViewmodel extends _$FilterByGenderViewmodel {
   @override
   void build() {}
 
-  void infiniteScroll({
+  bool shouldFetchScroll({
     required ScrollController scrollController,
-    required providerNotifier,
   }) {
-    scrollController.addListener(
-      () {
-        if (scrollController.position.pixels + 500 >=
-            scrollController.position.maxScrollExtent) {
-          providerNotifier.getCharacters();
-        }
-      },
-    );
+    return (scrollController.position.pixels + 500 >=
+        scrollController.position.maxScrollExtent);
   }
 
-  void chechForMoreCharacters({
+  bool shouldFetchMoreCharacters({
     required provider,
     required int minQuantityOfCharacters,
-    required providerNotifier,
   }) {
     final characters = ref.watch(provider);
 
-    Future(() {
-      if (characters.length < minQuantityOfCharacters) {
-        providerNotifier.getCharacters();
-      }
-    });
+    return characters.length < minQuantityOfCharacters;
   }
 
   void scrollControllerListener(

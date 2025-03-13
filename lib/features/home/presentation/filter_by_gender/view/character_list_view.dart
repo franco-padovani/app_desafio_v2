@@ -24,14 +24,19 @@ class CharacterListState extends ConsumerState<CharacterList> {
     final providerNotifier = ref.read(widget.provider.notifier);
     final viewmodel = ref.read(filterByGenderViewmodelProvider.notifier);
 
-    providerNotifier.getCharacters();
-
-    viewmodel.infiniteScroll(
-      scrollController: _scrollController,
-      providerNotifier: providerNotifier,
-    );
+    _setScrollListener(providerNotifier, viewmodel);
 
     super.initState();
+  }
+
+  void _setScrollListener(FilterByGenderNotifier providerNotifier,
+      FilterByGenderViewmodel viewmodel) {
+    providerNotifier.getCharacters();
+    _scrollController.addListener(() {
+      if (viewmodel.shouldFetchScroll(scrollController: _scrollController)) {
+        providerNotifier.getCharacters();
+      }
+    });
   }
 
   @override
@@ -48,11 +53,10 @@ class CharacterListState extends ConsumerState<CharacterList> {
 
     final providerNotifier = ref.read(widget.provider.notifier);
 
-    viewmodel.chechForMoreCharacters(
-      provider: widget.provider,
-      minQuantityOfCharacters: 4,
-      providerNotifier: providerNotifier,
-    );
+    if (viewmodel.shouldFetchMoreCharacters(
+        provider: widget.provider, minQuantityOfCharacters: 4)) {
+      providerNotifier.getCharacters();
+    }
 
     return (isLoading)
         ? _LoadingWidget()
