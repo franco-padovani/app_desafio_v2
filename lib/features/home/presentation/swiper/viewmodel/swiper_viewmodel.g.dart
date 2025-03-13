@@ -1,0 +1,26 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'swiper_viewmodel.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$swiperViewmodelHash() => r'6935296b71c0845a90f5d07d98a6b5ec85cc1848';
+
+/// See also [SwiperViewmodel].
+@ProviderFor(SwiperViewmodel)
+final swiperViewmodelProvider =
+    AutoDisposeNotifierProvider<SwiperViewmodel, void>.internal(
+  SwiperViewmodel.new,
+  name: r'swiperViewmodelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$swiperViewmodelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SwiperViewmodel = AutoDisposeNotifier<void>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

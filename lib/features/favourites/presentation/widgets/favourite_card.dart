@@ -1,3 +1,4 @@
+import 'package:app_desafio_v2/features/favourites/presentation/viewmodel/favourites_viewmodel.dart';
 import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,7 @@ class FavouriteCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favouritesState = ref.watch(favouritesNotifierProvider);
-    final favouritesNotifier = ref.read(favouritesNotifierProvider.notifier);
+    final favouritesNotifier = ref.read(favouritesViewmodelProvider.notifier);
 
     final isFavourite = isFav(favouritesState, character);
     return GestureDetector(
@@ -48,7 +49,7 @@ class _CardContent extends StatelessWidget {
   });
 
   final dynamic character;
-  final FavouritesNotifier favouritesNotifier;
+  final FavouritesViewmodel favouritesNotifier;
   final bool isFavourite;
 
   @override
@@ -65,7 +66,7 @@ class _CardContent extends StatelessWidget {
           right: 0,
           child: IconButton(
             onPressed: () {
-              favouritesNotifier.toggleFavourite(character);
+              favouritesNotifier.deleteCharacter(character);
             },
             icon: Icon(
               Icons.favorite,

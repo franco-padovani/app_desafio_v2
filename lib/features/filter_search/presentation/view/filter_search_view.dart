@@ -1,10 +1,9 @@
-import 'dart:async';
+import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel/filter_search_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel/viewmodel.dart';
-import 'package:app_desafio_v2/features/filter_search/presentation/widgets/widgets.dart';
-import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
+import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel.dart';
+import 'package:app_desafio_v2/features/filter_search/presentation/widgets.dart';
 import 'package:app_desafio_v2/features/shared/widgets/widgets.dart';
 
 class SearchView extends ConsumerStatefulWidget {
@@ -22,32 +21,12 @@ class _SearchViewState extends ConsumerState<SearchView> {
   @override
   void initState() {
     super.initState();
+    final viewmodel = ref.read(filterSearchViewmodelProvider.notifier);
 
-    _fetchInitialData();
-    _setListeners();
-  }
-
-  void _fetchInitialData() {
-    Future.microtask(
-      () {
-        ref.read(getAllCharactersProvider.notifier).searchCharacters();
-        ref.read(isFirstSearchProvider.notifier).setToTrue();
-      },
-    );
-  }
-
-  void _setListeners() {
-    _searchController.addListener(() {
-      ref
-          .read(searchQueryProvider.notifier)
-          .setSearchQuery(_searchController.text);
-      final String query = ref.read(searchQueryProvider);
-      ref.read(searchCharactersProvider.notifier).searchCharacters(query);
-    });
-
-    _scrollController.addListener(() {
-      _alreadyScrolledSetter(_scrollController.position.pixels);
-    });
+    viewmodel.fetchInitialData();
+    viewmodel.searchControllerListener(_searchController);
+    viewmodel.scrollControllerListener(
+        _scrollController, _alreadyScrolledSetter);
   }
 
   @override
@@ -60,6 +39,7 @@ class _SearchViewState extends ConsumerState<SearchView> {
 
   @override
   Widget build(BuildContext context) {
+    final viewmodel = ref.read(filterSearchViewmodelProvider.notifier);
     final (
       characters,
       displayProgressIndicator,
@@ -67,7 +47,7 @@ class _SearchViewState extends ConsumerState<SearchView> {
       progressPercent,
       isFirstSearchState,
       isUsingFilterState,
-    ) = _initializeVariables();
+    ) = viewmodel.initializeVariables(ref);
 
     return Scaffold(
       drawer: FilterDrawer(
@@ -114,34 +94,6 @@ class _SearchViewState extends ConsumerState<SearchView> {
           ],
         ),
       ),
-    );
-  }
-
-  (List<Character>, bool, double, int, bool, bool) _initializeVariables() {
-    final charactersFromSearchState = ref.watch(searchCharactersProvider);
-    final charactersFromFilterState =
-        ref.watch(filterCharactersNotifierProvider);
-    final pagesChargedState = ref.watch(pagesChargedProvider);
-    final totalNumberOfPages =
-        ref.watch(pagesChargedProvider.notifier).totalNumberOfPages;
-    final isUsingFilterState = ref.watch(isUsingFilterProvider);
-    final isFirstSearchState = ref.watch(isFirstSearchProvider);
-
-    final double progressIndicator = pagesChargedState / totalNumberOfPages;
-    final int progressPercent = (progressIndicator * 100).round();
-    final bool displayProgressIndicator = progressPercent < 100;
-
-    final characters = isUsingFilterState
-        ? charactersFromFilterState
-        : charactersFromSearchState;
-
-    return (
-      characters,
-      displayProgressIndicator,
-      progressIndicator,
-      progressPercent,
-      isFirstSearchState,
-      isUsingFilterState
     );
   }
 

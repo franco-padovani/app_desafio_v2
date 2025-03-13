@@ -1,3 +1,4 @@
+import 'package:app_desafio_v2/features/home/presentation/swiper/viewmodel/swiper_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,9 @@ class CharacterSwiperState extends ConsumerState<CharacterSwiper> {
   bool _isLoopEnabled = false;
   @override
   void initState() {
-    ref.read(mainCharactersProvider.notifier).getCharacters();
+    final viewmodel = ref.read(swiperViewmodelProvider.notifier);
+    viewmodel.setCharacters();
+
     /*
     Cuando activo el loop hace muchas vueltas al principio, asi que lo desactivo las 
     primeras milesimas de segundo para que no se vuelva loco y despues hago el loop infinito

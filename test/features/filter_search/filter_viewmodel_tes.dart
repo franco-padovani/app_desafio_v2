@@ -1,4 +1,4 @@
-import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel/viewmodel.dart';
+import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel.dart';
 import 'package:app_desafio_v2/features/shared/data/datasources/rick_and_morty_api_datasource_impl.dart';
 import 'package:app_desafio_v2/features/shared/data/providers/providers.dart';
 import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';

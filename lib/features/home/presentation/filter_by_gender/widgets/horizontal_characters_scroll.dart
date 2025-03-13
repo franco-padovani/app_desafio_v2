@@ -1,3 +1,4 @@
+import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/viewmodel/filter_by_gender_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
@@ -5,8 +6,9 @@ import 'package:app_desafio_v2/features/shared/widgets/widgets.dart';
 import 'package:app_desafio_v2/core/config/text/texts.dart';
 import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/widgets/widgets.dart';
 import 'package:app_desafio_v2/features/home/presentation/filter_by_gender/view/character_list_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HorizontalCharactersScroll extends StatefulWidget {
+class HorizontalCharactersScroll extends ConsumerStatefulWidget {
   const HorizontalCharactersScroll({
     super.key,
     required this.parentWidget,
@@ -19,19 +21,20 @@ class HorizontalCharactersScroll extends StatefulWidget {
   final List<Character> filteredCharacters;
 
   @override
-  State<HorizontalCharactersScroll> createState() =>
+  ConsumerState<HorizontalCharactersScroll> createState() =>
       _HorizontalCharactersScrollState();
 }
 
 class _HorizontalCharactersScrollState
-    extends State<HorizontalCharactersScroll> {
+    extends ConsumerState<HorizontalCharactersScroll> {
   bool _alreadyScrolled = false;
 
   @override
   void initState() {
-    widget._scrollController.addListener(() {
-      _alreadyScrolledSetter(widget._scrollController.position.pixels);
-    });
+    final viewmodel = ref.read(filterByGenderViewmodelProvider.notifier);
+
+    viewmodel.scrollControllerListener(
+        widget._scrollController, _alreadyScrolledSetter);
     super.initState();
   }
 

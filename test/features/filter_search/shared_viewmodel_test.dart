@@ -1,4 +1,4 @@
-import 'package:app_desafio_v2/features/filter_search/presentation/viewmodel/shared/shared_providers.dart';
+import 'package:app_desafio_v2/features/filter_search/presentation/shared/viewmodel/shared_providers.dart';
 import 'package:app_desafio_v2/features/shared/data/datasources/rick_and_morty_api_datasource_impl.dart';
 import 'package:app_desafio_v2/features/shared/data/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

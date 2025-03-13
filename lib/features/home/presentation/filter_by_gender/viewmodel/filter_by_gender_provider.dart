@@ -64,8 +64,7 @@ class FilterByGenderNotifier extends StateNotifier<List<Character>> {
 
   void _updatePage() {
     if (currentPage <= totalPages!) {
-      Future.delayed(
-        Duration.zero,
+      Future(
         () {
           ref.read(nextPageProvider.notifier).state =
               '$baseUrl${currentPage.toString()}';

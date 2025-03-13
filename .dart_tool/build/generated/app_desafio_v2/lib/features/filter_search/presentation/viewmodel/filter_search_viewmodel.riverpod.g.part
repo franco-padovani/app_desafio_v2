@@ -1,0 +1,23 @@
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$filterSearchViewmodelHash() =>
+    r'085351148f5d9c2ce99b6c1c748c1e9a52e4bb45';
+
+/// See also [FilterSearchViewmodel].
+@ProviderFor(FilterSearchViewmodel)
+final filterSearchViewmodelProvider =
+    AutoDisposeNotifierProvider<FilterSearchViewmodel, void>.internal(
+  FilterSearchViewmodel.new,
+  name: r'filterSearchViewmodelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filterSearchViewmodelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FilterSearchViewmodel = AutoDisposeNotifier<void>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
