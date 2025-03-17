@@ -21,6 +21,7 @@ class _FavouritesViewState extends ConsumerState<FavouritesView> {
     return Scaffold(
       appBar: const PersonalizedAppBar().appBar(
         title: 'Favourites',
+        context: context,
       ),
       bottomNavigationBar: const MyBottomNavigationBar(),
       body: favouriteCharacters.when(

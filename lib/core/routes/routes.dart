@@ -1,15 +1,22 @@
+import 'package:app_desafio_v2/features/auth/view/auth_view.dart';
 import 'package:app_desafio_v2/features/favourites/presentation/view/favourites_view.dart';
 import 'package:app_desafio_v2/features/home/presentation/view/home_view.dart';
 import 'package:app_desafio_v2/features/filter_search/presentation/view/filter_search_view.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
-  static const home = '/';
+  static const auth = '/';
+  static const home = '/home';
   static const search = '/search';
   static const favourites = '/favourites';
   static const characterScreen = '/characterScreen';
 
   static final routes = [
+    GoRoute(
+      name: '-1',
+      path: auth,
+      builder: (context, state) => AuthView(),
+    ),
     GoRoute(
       name: '0',
       path: home,
