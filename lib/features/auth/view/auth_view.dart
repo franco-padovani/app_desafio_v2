@@ -1,4 +1,4 @@
-import 'package:app_desafio_v2/features/auth/shared/viewmodel/show_screen_provider.dart';
+import 'package:app_desafio_v2/features/auth/shared/viewmodel/select_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +12,7 @@ class AuthView extends ConsumerStatefulWidget {
 class _AuthViewState extends ConsumerState<AuthView> {
   @override
   Widget build(BuildContext context) {
-    final showScreen = ref.watch(showScreenProvider);
+    final showScreen = ref.watch(screenControllerProvider);
     return Scaffold(
       body: showScreen.route,
     );

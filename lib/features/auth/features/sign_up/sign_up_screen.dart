@@ -1,5 +1,5 @@
 import 'package:app_desafio_v2/core/config/theme/themes.dart';
-import 'package:app_desafio_v2/features/auth/shared/viewmodel/show_screen_provider.dart';
+import 'package:app_desafio_v2/features/auth/shared/viewmodel/select_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +17,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final showScreenNotifier = ref.read(showScreenProvider.notifier);
+    final showScreenNotifier = ref.read(screenControllerProvider.notifier);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -40,6 +40,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               height: 40,
             ),
             const SignUpButton(),
+            SizedBox(height: 10),
             SwitchToSignIn(showScreenNotifier: showScreenNotifier)
           ],
         ),
@@ -54,7 +55,7 @@ class SwitchToSignIn extends StatelessWidget {
     required this.showScreenNotifier,
   });
 
-  final ShowScreen showScreenNotifier;
+  final ScreenController showScreenNotifier;
 
   @override
   Widget build(BuildContext context) {
