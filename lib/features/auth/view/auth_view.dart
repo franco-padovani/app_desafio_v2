@@ -1,3 +1,5 @@
+import 'package:app_desafio_v2/features/auth/features/sign_in/view/sign_in_view.dart';
+import 'package:app_desafio_v2/features/auth/features/sign_up/view/sign_up_view.dart';
 import 'package:app_desafio_v2/features/auth/shared/viewmodel/select_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +16,10 @@ class _AuthViewState extends ConsumerState<AuthView> {
   Widget build(BuildContext context) {
     final showScreen = ref.watch(screenControllerProvider);
     return Scaffold(
-      body: showScreen.route,
+      body: switch (showScreen) {
+        Screen.signIn => SignInScreen(),
+        Screen.signUp => SignUpScreen(),
+      },
     );
   }
 }

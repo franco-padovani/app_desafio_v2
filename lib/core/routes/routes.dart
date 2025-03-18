@@ -1,6 +1,6 @@
 import 'package:app_desafio_v2/features/auth/view/auth_view.dart';
-import 'package:app_desafio_v2/features/auth/features/sign_in/sign_in_screen.dart';
-import 'package:app_desafio_v2/features/auth/features/sign_up/sign_up_screen.dart';
+import 'package:app_desafio_v2/features/auth/features/sign_in/view/sign_in_view.dart';
+import 'package:app_desafio_v2/features/auth/features/sign_up/view/sign_up_view.dart';
 import 'package:app_desafio_v2/features/favourites/presentation/view/favourites_view.dart';
 import 'package:app_desafio_v2/features/home/presentation/view/home_view.dart';
 import 'package:app_desafio_v2/features/filter_search/presentation/view/filter_search_view.dart';
