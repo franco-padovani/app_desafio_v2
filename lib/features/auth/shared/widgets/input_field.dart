@@ -20,6 +20,7 @@ class InputField extends ConsumerStatefulWidget {
 
 class _InputFieldState extends ConsumerState<InputField> {
   final TextEditingController _textFormFielController = TextEditingController();
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     final notifier = ref.read(widget.provider.notifier);
@@ -27,7 +28,7 @@ class _InputFieldState extends ConsumerState<InputField> {
       onChanged: (newValue) {
         notifier.updateValue(newValue);
       },
-      obscureText: widget.hideInput,
+      obscureText: (widget.hideInput) ? _isObscure : widget.hideInput,
       controller: _textFormFielController,
       decoration: InputDecoration(
         hintText: widget.hintText,
@@ -37,7 +38,22 @@ class _InputFieldState extends ConsumerState<InputField> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.blueTurquoise, width: 3),
         ),
+        suffixIcon: (widget.hideInput)
+            ? IconButton(
+                icon:
+                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  toggleIsObscure();
+                },
+              )
+            : null,
       ),
     );
+  }
+
+  void toggleIsObscure() {
+    setState(() {
+      _isObscure = !_isObscure;
+    });
   }
 }

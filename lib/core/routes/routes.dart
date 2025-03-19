@@ -24,12 +24,12 @@ class AppRoutes {
     GoRoute(
       name: 'Sign Up',
       path: signUp,
-      builder: (context, state) => SignUpScreen(),
+      builder: (context, state) => SignUpView(),
     ),
     GoRoute(
       name: 'Sign In',
       path: signIn,
-      builder: (context, state) => SignInScreen(),
+      builder: (context, state) => SignInView(),
     ),
     GoRoute(
       name: '0',

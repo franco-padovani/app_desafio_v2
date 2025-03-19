@@ -17,8 +17,8 @@ class _AuthViewState extends ConsumerState<AuthView> {
     final showScreen = ref.watch(screenControllerProvider);
     return Scaffold(
       body: switch (showScreen) {
-        Screen.signIn => SignInScreen(),
-        Screen.signUp => SignUpScreen(),
+        Screen.signIn => SignInView(),
+        Screen.signUp => SignUpView(),
       },
     );
   }
