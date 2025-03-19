@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:app_desafio_v2/core/config/text/texts.dart';
 import 'package:app_desafio_v2/core/config/theme/themes.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PersonalizedAppBar {
   const PersonalizedAppBar();
