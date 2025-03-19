@@ -6,7 +6,7 @@ part of 'user_sign_up_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signUpUserHash() => r'7092a8c9aa76d7393f258d23858201ac3935a974';
+String _$signUpUserHash() => r'5712611a75da2d196511bac000a18de5747c6421';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,16 +29,27 @@ class _SystemHash {
   }
 }
 
-/// See also [signUpUser].
-@ProviderFor(signUpUser)
+abstract class _$SignUpUser
+    extends BuildlessAutoDisposeAsyncNotifier<UserSignInState> {
+  late final String email;
+  late final String password;
+
+  FutureOr<UserSignInState> build(
+    String email,
+    String password,
+  );
+}
+
+/// See also [SignUpUser].
+@ProviderFor(SignUpUser)
 const signUpUserProvider = SignUpUserFamily();
 
-/// See also [signUpUser].
-class SignUpUserFamily extends Family<AsyncValue<User>> {
-  /// See also [signUpUser].
+/// See also [SignUpUser].
+class SignUpUserFamily extends Family<AsyncValue<UserSignInState>> {
+  /// See also [SignUpUser].
   const SignUpUserFamily();
 
-  /// See also [signUpUser].
+  /// See also [SignUpUser].
   SignUpUserProvider call(
     String email,
     String password,
@@ -74,18 +85,17 @@ class SignUpUserFamily extends Family<AsyncValue<User>> {
   String? get name => r'signUpUserProvider';
 }
 
-/// See also [signUpUser].
-class SignUpUserProvider extends AutoDisposeFutureProvider<User> {
-  /// See also [signUpUser].
+/// See also [SignUpUser].
+class SignUpUserProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<SignUpUser, UserSignInState> {
+  /// See also [SignUpUser].
   SignUpUserProvider(
     String email,
     String password,
   ) : this._internal(
-          (ref) => signUpUser(
-            ref as SignUpUserRef,
-            email,
-            password,
-          ),
+          () => SignUpUser()
+            ..email = email
+            ..password = password,
           from: signUpUserProvider,
           name: r'signUpUserProvider',
           debugGetCreateSourceHash:
@@ -114,13 +124,23 @@ class SignUpUserProvider extends AutoDisposeFutureProvider<User> {
   final String password;
 
   @override
-  Override overrideWith(
-    FutureOr<User> Function(SignUpUserRef provider) create,
+  FutureOr<UserSignInState> runNotifierBuild(
+    covariant SignUpUser notifier,
   ) {
+    return notifier.build(
+      email,
+      password,
+    );
+  }
+
+  @override
+  Override overrideWith(SignUpUser Function() create) {
     return ProviderOverride(
       origin: this,
       override: SignUpUserProvider._internal(
-        (ref) => create(ref as SignUpUserRef),
+        () => create()
+          ..email = email
+          ..password = password,
         from: from,
         name: null,
         dependencies: null,
@@ -133,7 +153,8 @@ class SignUpUserProvider extends AutoDisposeFutureProvider<User> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<User> createElement() {
+  AutoDisposeAsyncNotifierProviderElement<SignUpUser, UserSignInState>
+      createElement() {
     return _SignUpUserProviderElement(this);
   }
 
@@ -156,7 +177,7 @@ class SignUpUserProvider extends AutoDisposeFutureProvider<User> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin SignUpUserRef on AutoDisposeFutureProviderRef<User> {
+mixin SignUpUserRef on AutoDisposeAsyncNotifierProviderRef<UserSignInState> {
   /// The parameter `email` of this provider.
   String get email;
 
@@ -164,7 +185,8 @@ mixin SignUpUserRef on AutoDisposeFutureProviderRef<User> {
   String get password;
 }
 
-class _SignUpUserProviderElement extends AutoDisposeFutureProviderElement<User>
+class _SignUpUserProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<SignUpUser, UserSignInState>
     with SignUpUserRef {
   _SignUpUserProviderElement(super.provider);
 

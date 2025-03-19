@@ -37,6 +37,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InputField(
+              hideInput: false,
               provider: emailProvider,
               hintText: 'example@gmail.com',
             ),
@@ -44,6 +45,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               height: 20,
             ),
             InputField(
+              hideInput: true,
               provider: passwordProvider,
               hintText: 'Password',
             ),
@@ -51,23 +53,24 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               height: 40,
             ),
             userSignInState.when(
-                data: (state) {
-                  if (state is IncorrectCredentialsState) {
-                    return Center(child: Text(state.error));
-                  } else if (state is CorrectCredentialsState) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      context.go(AppRoutes.home);
-                    });
-                    return SizedBox();
-                  } else if (state is FetchingState) {
-                    return CircularProgressIndicator(strokeWidth: 2);
-                  }
-                  return _buildAuthButtons(
-                      userSignInNotifier, showScreenNotifier);
-                },
-                error: (error, _) => _buildErrorHandler(error),
-                loading: () =>
-                    _buildAuthButtons(userSignInNotifier, showScreenNotifier))
+              data: (state) {
+                if (state is IncorrectCredentialsState) {
+                  return Center(child: Text(state.error));
+                } else if (state is CorrectCredentialsState) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    context.go(AppRoutes.home);
+                  });
+                  return SizedBox();
+                } else if (state is FetchingState) {
+                  return CircularProgressIndicator(strokeWidth: 2);
+                }
+                return _buildAuthButtons(
+                    userSignInNotifier, showScreenNotifier);
+              },
+              error: (error, _) => _buildErrorHandler(error),
+              loading: () =>
+                  _buildAuthButtons(userSignInNotifier, showScreenNotifier),
+            )
           ],
         ),
       ),

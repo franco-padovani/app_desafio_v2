@@ -5,10 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class InputField extends ConsumerStatefulWidget {
   const InputField({
     super.key,
+    required this.hideInput,
     required this.provider,
     required this.hintText,
   });
 
+  final bool hideInput;
   final AutoDisposeNotifierProvider<dynamic, String> provider;
   final String hintText;
 
@@ -25,6 +27,7 @@ class _InputFieldState extends ConsumerState<InputField> {
       onChanged: (newValue) {
         notifier.updateValue(newValue);
       },
+      obscureText: widget.hideInput,
       controller: _textFormFielController,
       decoration: InputDecoration(
         hintText: widget.hintText,
