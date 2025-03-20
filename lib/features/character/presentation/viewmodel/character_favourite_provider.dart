@@ -12,14 +12,13 @@ class FavouritesNotifier extends _$FavouritesNotifier {
 
   @override
   Future<List<Character>> build() async {
-    _favouritesDatabase = ref.read(sembastFavouritesDBProvider);
+    _favouritesDatabase = ref.read(favouritesDBProvider);
     return await _favouritesDatabase.getAllCharacters();
   }
 
   Future<void> toggleFavourite(Character character) async {
     final currentFavourites = state.value ?? [];
     final isFav = currentFavourites.contains(character);
-
     if (isFav) {
       await _favouritesDatabase.deleteCharacter(character.id);
       state = AsyncData(

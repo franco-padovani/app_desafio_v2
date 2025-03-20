@@ -11,9 +11,7 @@ void main() async {
   await dotenv.load();
 
   await Supabase.initialize(
-      url: 'https://iqclwyjwwkdlzeyilzbq.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxY2x3eWp3d2tkbHpleWlsemJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyMTI4MjQsImV4cCI6MjA1Nzc4ODgyNH0.82gKlnH95LIViZuqRUK8lizniC-dfGhL4WgEdjXwKbY');
+      url: dotenv.env['SUPABASE_URL']!, anonKey: dotenv.env['SUPABASE_KEY']!);
 
   runApp(ProviderScope(child: MyApp()));
 }

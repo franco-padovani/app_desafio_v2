@@ -29,7 +29,7 @@ void main() {
 
     container = ProviderContainer(
       overrides: [
-        sembastFavouritesDBProvider.overrideWithValue(mockCharacterRepository),
+        favouritesDBProvider.overrideWithValue(mockCharacterRepository),
       ],
     );
   });
