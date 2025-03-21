@@ -1,4 +1,4 @@
-import 'package:app_desafio_v2/features/shared/data/database/favourites_database_impl.dart';
+import 'package:app_desafio_v2/features/shared/data/database/sembast_favourites_database_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:app_desafio_v2/features/shared/model/entities/entities.dart';
@@ -6,8 +6,8 @@ import '../../test_constants/rick_sanchez.dart';
 import 'resources/fake_favourites_service.dart';
 
 void main() {
-  final FavouritesDatabaseImpl fakeRepository =
-      FavouritesDatabaseImpl(FakeFavouritesService());
+  final SembastFavouritesDatabaseImpl fakeRepository =
+      SembastFavouritesDatabaseImpl(FakeFavouritesService());
   test('database initialized with no characters', () async {
     final List<Character> characters = await fakeRepository.getAllCharacters();
 
