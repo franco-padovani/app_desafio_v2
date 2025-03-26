@@ -1,3 +1,4 @@
+import 'package:app_desafio_v2/core/config/text/texts.dart';
 import 'package:app_desafio_v2/core/config/theme/themes.dart';
 import 'package:app_desafio_v2/core/routes/routes.dart';
 import 'package:app_desafio_v2/features/auth/features/sign_up/viewmodel/user_sign_up_provider.dart';
@@ -24,11 +25,13 @@ class _SignUpScreenState extends ConsumerState<SignUpView> {
 
     final emailState = ref.watch(emailProvider);
     final passwordState = ref.watch(passwordProvider);
+    final confirmPasswordState = ref.watch(confirmPasswordProvider);
 
-    final userSignUpState =
-        ref.watch(signUpUserProvider(emailState, passwordState));
-    final userSignUpNotifier =
-        ref.watch(signUpUserProvider(emailState, passwordState).notifier);
+    final userSignUpState = ref.watch(
+        signUpUserProvider(emailState, passwordState, confirmPasswordState));
+    final userSignUpNotifier = ref.watch(
+        signUpUserProvider(emailState, passwordState, confirmPasswordState)
+            .notifier);
 
     return Scaffold(
       body: Padding(
@@ -51,12 +54,41 @@ class _SignUpScreenState extends ConsumerState<SignUpView> {
               hintText: 'Password',
             ),
             const SizedBox(
+              height: 20,
+            ),
+            InputField(
+              hideInput: true,
+              provider: confirmPasswordProvider,
+              hintText: 'Confirm Password',
+            ),
+            const SizedBox(
               height: 40,
             ),
             userSignUpState.when(
               data: (state) {
                 if (state is NullUserState) {
                   return Center(child: Text(state.error));
+                } else if (state is NoMatchPassword ||
+                    state is NotMeetsPasswordCriteria) {
+                  return Column(
+                    children: [
+                      Text(
+                        (state is NoMatchPassword)
+                            ? 'Passwords do not match,'
+                            : 'Al menos una letra mayúscula (A-Z). Al menos una letra minúscula (a-z). Al menos un número (0-9).              Al menos un carácter especial (@, \$, !, %, *, ?, &).',
+                        style: AppTextStyles.smallErrorText,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Text(
+                        'To retry change your credentials',
+                        style: AppTextStyles.smallErrorText,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
                 } else if (state is NewUserBuildedState) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     context.go(AppRoutes.home);

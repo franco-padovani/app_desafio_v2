@@ -21,3 +21,13 @@ class Password extends _$Password {
 
   void updateValue(String newValue) => state = newValue;
 }
+
+@riverpod
+class ConfirmPassword extends _$ConfirmPassword {
+  @override
+  String build() {
+    return '';
+  }
+
+  void updateValue(String newValue) => state = newValue;
+}

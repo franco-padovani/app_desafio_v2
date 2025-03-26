@@ -6,7 +6,7 @@ part of 'user_sign_up_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signUpUserHash() => r'5712611a75da2d196511bac000a18de5747c6421';
+String _$signUpUserHash() => r'a10c90eaf7c0a3b121f7037fe58dddde4aeccd37';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,10 +33,12 @@ abstract class _$SignUpUser
     extends BuildlessAutoDisposeAsyncNotifier<UserSignInState> {
   late final String email;
   late final String password;
+  late final String confirmPassword;
 
   FutureOr<UserSignInState> build(
     String email,
     String password,
+    String confirmPassword,
   );
 }
 
@@ -53,10 +55,12 @@ class SignUpUserFamily extends Family<AsyncValue<UserSignInState>> {
   SignUpUserProvider call(
     String email,
     String password,
+    String confirmPassword,
   ) {
     return SignUpUserProvider(
       email,
       password,
+      confirmPassword,
     );
   }
 
@@ -67,6 +71,7 @@ class SignUpUserFamily extends Family<AsyncValue<UserSignInState>> {
     return call(
       provider.email,
       provider.password,
+      provider.confirmPassword,
     );
   }
 
@@ -92,10 +97,12 @@ class SignUpUserProvider
   SignUpUserProvider(
     String email,
     String password,
+    String confirmPassword,
   ) : this._internal(
           () => SignUpUser()
             ..email = email
-            ..password = password,
+            ..password = password
+            ..confirmPassword = confirmPassword,
           from: signUpUserProvider,
           name: r'signUpUserProvider',
           debugGetCreateSourceHash:
@@ -107,6 +114,7 @@ class SignUpUserProvider
               SignUpUserFamily._allTransitiveDependencies,
           email: email,
           password: password,
+          confirmPassword: confirmPassword,
         );
 
   SignUpUserProvider._internal(
@@ -118,10 +126,12 @@ class SignUpUserProvider
     required super.from,
     required this.email,
     required this.password,
+    required this.confirmPassword,
   }) : super.internal();
 
   final String email;
   final String password;
+  final String confirmPassword;
 
   @override
   FutureOr<UserSignInState> runNotifierBuild(
@@ -130,6 +140,7 @@ class SignUpUserProvider
     return notifier.build(
       email,
       password,
+      confirmPassword,
     );
   }
 
@@ -140,7 +151,8 @@ class SignUpUserProvider
       override: SignUpUserProvider._internal(
         () => create()
           ..email = email
-          ..password = password,
+          ..password = password
+          ..confirmPassword = confirmPassword,
         from: from,
         name: null,
         dependencies: null,
@@ -148,6 +160,7 @@ class SignUpUserProvider
         debugGetCreateSourceHash: null,
         email: email,
         password: password,
+        confirmPassword: confirmPassword,
       ),
     );
   }
@@ -162,7 +175,8 @@ class SignUpUserProvider
   bool operator ==(Object other) {
     return other is SignUpUserProvider &&
         other.email == email &&
-        other.password == password;
+        other.password == password &&
+        other.confirmPassword == confirmPassword;
   }
 
   @override
@@ -170,6 +184,7 @@ class SignUpUserProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, email.hashCode);
     hash = _SystemHash.combine(hash, password.hashCode);
+    hash = _SystemHash.combine(hash, confirmPassword.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -183,6 +198,9 @@ mixin SignUpUserRef on AutoDisposeAsyncNotifierProviderRef<UserSignInState> {
 
   /// The parameter `password` of this provider.
   String get password;
+
+  /// The parameter `confirmPassword` of this provider.
+  String get confirmPassword;
 }
 
 class _SignUpUserProviderElement
@@ -194,6 +212,8 @@ class _SignUpUserProviderElement
   String get email => (origin as SignUpUserProvider).email;
   @override
   String get password => (origin as SignUpUserProvider).password;
+  @override
+  String get confirmPassword => (origin as SignUpUserProvider).confirmPassword;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -34,5 +34,21 @@ final passwordProvider = AutoDisposeNotifierProvider<Password, String>.internal(
 );
 
 typedef _$Password = AutoDisposeNotifier<String>;
+String _$confirmPasswordHash() => r'73c63221b523783d15d0ec1ce2bbf82d0ba46e98';
+
+/// See also [ConfirmPassword].
+@ProviderFor(ConfirmPassword)
+final confirmPasswordProvider =
+    AutoDisposeNotifierProvider<ConfirmPassword, String>.internal(
+  ConfirmPassword.new,
+  name: r'confirmPasswordProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$confirmPasswordHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ConfirmPassword = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
