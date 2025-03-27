@@ -1,5 +1,6 @@
 import 'package:app_desafio_v2/features/auth/shared/data/providers/user_repository_provider.dart';
 import 'package:app_desafio_v2/features/auth/shared/model/repository/user_repository.dart';
+import 'package:app_desafio_v2/features/auth/shared/viewmodel/sign_in_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -32,9 +33,9 @@ class SignInUser extends _$SignInUser {
   late final UserRepository userRepository;
 
   @override
-  Future<UserSignInState> build(String email, String password) async {
-    _email = email;
-    _password = password;
+  Future<UserSignInState> build(SignInState signInState) async {
+    _email = signInState.email;
+    _password = signInState.password;
     userRepository = await ref.read(userRepositoryProvider);
 
     return InitialState();

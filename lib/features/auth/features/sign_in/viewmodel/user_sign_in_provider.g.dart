@@ -6,7 +6,7 @@ part of 'user_sign_in_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signInUserHash() => r'c3813879d1a9056efff53a14c4ba5db82f3b29c2';
+String _$signInUserHash() => r'496682e9f6708eb0c4ed683a48ab5cc6e42f0b2e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,12 +31,10 @@ class _SystemHash {
 
 abstract class _$SignInUser
     extends BuildlessAutoDisposeAsyncNotifier<UserSignInState> {
-  late final String email;
-  late final String password;
+  late final SignInState signInState;
 
   FutureOr<UserSignInState> build(
-    String email,
-    String password,
+    SignInState signInState,
   );
 }
 
@@ -51,12 +49,10 @@ class SignInUserFamily extends Family<AsyncValue<UserSignInState>> {
 
   /// See also [SignInUser].
   SignInUserProvider call(
-    String email,
-    String password,
+    SignInState signInState,
   ) {
     return SignInUserProvider(
-      email,
-      password,
+      signInState,
     );
   }
 
@@ -65,8 +61,7 @@ class SignInUserFamily extends Family<AsyncValue<UserSignInState>> {
     covariant SignInUserProvider provider,
   ) {
     return call(
-      provider.email,
-      provider.password,
+      provider.signInState,
     );
   }
 
@@ -90,12 +85,9 @@ class SignInUserProvider
     extends AutoDisposeAsyncNotifierProviderImpl<SignInUser, UserSignInState> {
   /// See also [SignInUser].
   SignInUserProvider(
-    String email,
-    String password,
+    SignInState signInState,
   ) : this._internal(
-          () => SignInUser()
-            ..email = email
-            ..password = password,
+          () => SignInUser()..signInState = signInState,
           from: signInUserProvider,
           name: r'signInUserProvider',
           debugGetCreateSourceHash:
@@ -105,8 +97,7 @@ class SignInUserProvider
           dependencies: SignInUserFamily._dependencies,
           allTransitiveDependencies:
               SignInUserFamily._allTransitiveDependencies,
-          email: email,
-          password: password,
+          signInState: signInState,
         );
 
   SignInUserProvider._internal(
@@ -116,20 +107,17 @@ class SignInUserProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.email,
-    required this.password,
+    required this.signInState,
   }) : super.internal();
 
-  final String email;
-  final String password;
+  final SignInState signInState;
 
   @override
   FutureOr<UserSignInState> runNotifierBuild(
     covariant SignInUser notifier,
   ) {
     return notifier.build(
-      email,
-      password,
+      signInState,
     );
   }
 
@@ -138,16 +126,13 @@ class SignInUserProvider
     return ProviderOverride(
       origin: this,
       override: SignInUserProvider._internal(
-        () => create()
-          ..email = email
-          ..password = password,
+        () => create()..signInState = signInState,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        email: email,
-        password: password,
+        signInState: signInState,
       ),
     );
   }
@@ -160,16 +145,13 @@ class SignInUserProvider
 
   @override
   bool operator ==(Object other) {
-    return other is SignInUserProvider &&
-        other.email == email &&
-        other.password == password;
+    return other is SignInUserProvider && other.signInState == signInState;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, email.hashCode);
-    hash = _SystemHash.combine(hash, password.hashCode);
+    hash = _SystemHash.combine(hash, signInState.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -178,11 +160,8 @@ class SignInUserProvider
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin SignInUserRef on AutoDisposeAsyncNotifierProviderRef<UserSignInState> {
-  /// The parameter `email` of this provider.
-  String get email;
-
-  /// The parameter `password` of this provider.
-  String get password;
+  /// The parameter `signInState` of this provider.
+  SignInState get signInState;
 }
 
 class _SignInUserProviderElement
@@ -191,9 +170,7 @@ class _SignInUserProviderElement
   _SignInUserProviderElement(super.provider);
 
   @override
-  String get email => (origin as SignInUserProvider).email;
-  @override
-  String get password => (origin as SignInUserProvider).password;
+  SignInState get signInState => (origin as SignInUserProvider).signInState;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

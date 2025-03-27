@@ -1,6 +1,7 @@
 import 'package:app_desafio_v2/core/utils/regex_passwords_conditions.dart';
 import 'package:app_desafio_v2/features/auth/shared/data/providers/user_repository_provider.dart';
 import 'package:app_desafio_v2/features/auth/shared/model/repository/user_repository.dart';
+import 'package:app_desafio_v2/features/auth/shared/viewmodel/sign_up_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -20,10 +21,6 @@ class NewUserBuildedState extends UserSignInState {
   NewUserBuildedState(this.user);
 }
 
-class NoMatchPassword extends UserSignInState {}
-
-class NotMeetsPasswordCriteria extends UserSignInState {}
-
 class NullUserState extends UserSignInState {
   final String error;
 
@@ -35,17 +32,16 @@ class SignUpUser extends _$SignUpUser {
   late final String _email;
   late final String _password;
   late final String _confirmPassword;
-
-  late final UserRepository userRepository;
+  late final SignUpControll _signUpControll;
+  late final UserRepository _userRepository;
 
   @override
-  Future<UserSignInState> build(
-      String email, String password, String confirmPassword) async {
-    _email = email;
-    _password = password;
-    _confirmPassword = confirmPassword;
-
-    userRepository = await ref.read(userRepositoryProvider);
+  Future<UserSignInState> build(SignUpState signUpState) async {
+    _email = signUpState.email;
+    _password = signUpState.password;
+    _confirmPassword = signUpState.confirmPassword;
+    _signUpControll = ref.read(signUpControllProvider.notifier);
+    _userRepository = await ref.read(userRepositoryProvider);
 
     return InitialState();
   }
@@ -53,22 +49,21 @@ class SignUpUser extends _$SignUpUser {
   Future<void> signUpUser() async {
     state = AsyncData(FetchingState());
 
-    if (!_meetsPasswordCriteria(_password)) {
-      state = AsyncData(NotMeetsPasswordCriteria());
-    } else if (!_doPasswordsMatch(_password, _confirmPassword)) {
-      state = AsyncData(NoMatchPassword());
-    } else {
-      try {
-        final res = await userRepository.signUpNewUser(_email, _password);
+    _signUpControll.validateFields();
 
-        if (res.user == null) {
-          state = AsyncData(NullUserState('Unexpected error'));
-        } else {
-          state = AsyncData(NewUserBuildedState(res.user!));
-        }
-      } catch (error, str) {
-        state = AsyncError(error, str);
+    if (!_meetsPasswordCriteria(_password)) return;
+    if (!_doPasswordsMatch(_password, _confirmPassword)) return;
+
+    try {
+      final res = await _userRepository.signUpNewUser(_email, _password);
+
+      if (res.user == null) {
+        state = AsyncData(NullUserState('Unexpected error'));
+      } else {
+        state = AsyncData(NewUserBuildedState(res.user!));
       }
+    } catch (error, str) {
+      state = AsyncError(error, str);
     }
   }
 

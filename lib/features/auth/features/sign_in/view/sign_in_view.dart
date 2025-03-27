@@ -1,8 +1,8 @@
 import 'package:app_desafio_v2/core/config/theme/themes.dart';
 import 'package:app_desafio_v2/core/routes/routes.dart';
 import 'package:app_desafio_v2/features/auth/features/sign_in/viewmodel/user_sign_in_provider.dart';
-import 'package:app_desafio_v2/features/auth/shared/viewmodel/field_value_providers.dart';
 import 'package:app_desafio_v2/features/auth/shared/viewmodel/select_screen_provider.dart';
+import 'package:app_desafio_v2/features/auth/shared/viewmodel/sign_in_state.dart';
 import 'package:app_desafio_v2/features/auth/shared/widgets/input_field.dart';
 import 'package:app_desafio_v2/features/auth/shared/widgets/switch_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +21,12 @@ class _SignInScreenState extends ConsumerState<SignInView> {
   @override
   Widget build(BuildContext context) {
     final showScreenNotifier = ref.read(screenControllerProvider.notifier);
-    final emailState = ref.watch(emailProvider);
-    final passwordState = ref.watch(passwordProvider);
 
-    final userSignInState =
-        ref.watch(signInUserProvider(emailState, passwordState));
+    final signUpState = ref.watch(signInControllerProvider);
+
+    final userSignInState = ref.watch(signInUserProvider(signUpState));
     final userSignInNotifier =
-        ref.watch(signInUserProvider(emailState, passwordState).notifier);
+        ref.watch(signInUserProvider(signUpState).notifier);
 
     return Scaffold(
       body: Padding(
@@ -38,7 +37,8 @@ class _SignInScreenState extends ConsumerState<SignInView> {
           children: [
             InputField(
               hideInput: false,
-              provider: emailProvider,
+              type: 'email',
+              signProvider: signInControllerProvider,
               hintText: 'example@gmail.com',
             ),
             const SizedBox(
@@ -46,7 +46,8 @@ class _SignInScreenState extends ConsumerState<SignInView> {
             ),
             InputField(
               hideInput: true,
-              provider: passwordProvider,
+              type: 'password',
+              signProvider: signInControllerProvider,
               hintText: 'Password',
             ),
             const SizedBox(
