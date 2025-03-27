@@ -21,6 +21,12 @@ class NewUserBuildedState extends UserSignInState {
   NewUserBuildedState(this.user);
 }
 
+class NoMatchPassword extends UserSignInState {}
+
+class NotMeetsPasswordCriteria extends UserSignInState {}
+
+class RetrySignUp extends UserSignInState {}
+
 class NullUserState extends UserSignInState {
   final String error;
 
@@ -29,43 +35,46 @@ class NullUserState extends UserSignInState {
 
 @riverpod
 class SignUpUser extends _$SignUpUser {
-  late final String _email;
-  late final String _password;
-  late final String _confirmPassword;
-  late final SignUpControll _signUpControll;
   late final UserRepository _userRepository;
+  late final SignUpControll _signUpControll;
 
   @override
-  Future<UserSignInState> build(SignUpState signUpState) async {
-    _email = signUpState.email;
-    _password = signUpState.password;
-    _confirmPassword = signUpState.confirmPassword;
+  Future<UserSignInState> build() async {
     _signUpControll = ref.read(signUpControllProvider.notifier);
     _userRepository = await ref.read(userRepositoryProvider);
 
     return InitialState();
   }
 
-  Future<void> signUpUser() async {
+  Future<void> signUpUser(SignUpState signUpState) async {
     state = AsyncData(FetchingState());
 
     _signUpControll.validateFields();
 
-    if (!_meetsPasswordCriteria(_password)) return;
-    if (!_doPasswordsMatch(_password, _confirmPassword)) return;
+    final email = signUpState.email;
+    final password = signUpState.password;
+    final confirmPassword = signUpState.confirmPassword;
 
-    try {
-      final res = await _userRepository.signUpNewUser(_email, _password);
+    if (!_meetsPasswordCriteria(password)) {
+      state = AsyncData(NotMeetsPasswordCriteria());
+    } else if (!_doPasswordsMatch(password, confirmPassword)) {
+      state = AsyncData(NoMatchPassword());
+    } else {
+      try {
+        final res = await _userRepository.signUpNewUser(email, password);
 
-      if (res.user == null) {
-        state = AsyncData(NullUserState('Unexpected error'));
-      } else {
-        state = AsyncData(NewUserBuildedState(res.user!));
+        if (res.user == null) {
+          state = AsyncData(NullUserState('Unexpected error'));
+        } else {
+          state = AsyncData(NewUserBuildedState(res.user!));
+        }
+      } catch (error, str) {
+        state = AsyncError(error, str);
       }
-    } catch (error, str) {
-      state = AsyncError(error, str);
     }
   }
+
+  void retrySignUp() => state = AsyncData(InitialState());
 
   bool _meetsPasswordCriteria(String password) {
     final conditions = passwordConditions;
