@@ -26,7 +26,7 @@ class NothingFoundWidget extends StatelessWidget {
               child: Image.asset(MyAssetImages.sorryAboutThatGif)),
           Text(
             message,
-            style: AppTextStyles.errorText,
+            style: AppTextStyles.bigErrorText,
             textAlign: TextAlign.center,
           ),
         ],

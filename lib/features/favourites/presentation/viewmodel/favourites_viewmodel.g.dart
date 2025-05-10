@@ -7,7 +7,7 @@ part of 'favourites_viewmodel.dart';
 // **************************************************************************
 
 String _$favouritesViewmodelHash() =>
-    r'b0b8957318368803fa51e5f7b52056416e90c8b1';
+    r'd9d940c9d2a20e363168e51a44d87cf1fc7e547b';
 
 /// See also [FavouritesViewmodel].
 @ProviderFor(FavouritesViewmodel)

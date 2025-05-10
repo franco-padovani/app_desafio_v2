@@ -18,7 +18,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackground,
-      appBar: const PersonalizedAppBar().appBar(title: 'Home'),
+      appBar:
+          const PersonalizedAppBar().appBar(title: 'Home', context: context),
       bottomNavigationBar: const MyBottomNavigationBar(),
       body: ListView(
         children: [

@@ -40,6 +40,8 @@ class AppColors {
     blue: 1,
   );
   static const Color cardIcon = darkBlue;
+
+  static const Color error = deadColor;
 }
 
 class AppGradients {

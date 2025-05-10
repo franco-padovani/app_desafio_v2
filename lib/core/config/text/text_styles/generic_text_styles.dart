@@ -51,8 +51,14 @@ class AppTextStyles {
     color: Colors.black54,
   );
 
-  static const TextStyle errorText = TextStyle(
+  static const TextStyle bigErrorText = TextStyle(
       fontSize: 25,
+      fontWeight: FontWeight.bold,
+      color: Colors.redAccent,
+      letterSpacing: 1,
+      overflow: TextOverflow.visible);
+  static const TextStyle smallErrorText = TextStyle(
+      fontSize: 16,
       fontWeight: FontWeight.bold,
       color: Colors.redAccent,
       letterSpacing: 1,
